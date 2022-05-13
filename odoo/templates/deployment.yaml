@@ -82,7 +82,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.odoo.oldversion }}
           command: ['odoo']
-          args: ['--load',{{ (.Values.odoo.server_wide_modules | default "web,attachment_azure,session_redis,logging_json") | quote }}]
+          args: [{{ printf "'--load=%s'" (.Values.odoo.server_wide_modules | default "web,attachment_azure,session_redis,logging_json") }}]
           {{- end }}
           env:
           {{- include "odoo.common-environment" . | nindent 12 }}
@@ -185,7 +185,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.odoo.oldversion }}
           command: ['odoo']
-          args: ['--load',{{ printf "%s,connector" (.Values.odoo.server_wide_modules | default "web,attachment_azure,session_redis,logging_json") | quote }}]
+          args: [{{ printf "'--load=%s,connector'" (.Values.odoo.server_wide_modules | default "web,attachment_azure,session_redis,logging_json") }}]
           {{- end }}
           env:
             {{- include "odoo.common-environment" . | nindent 12 }}
